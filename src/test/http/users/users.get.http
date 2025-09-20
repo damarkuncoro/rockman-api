@@ -1,0 +1,46 @@
+### GET All Users
+# Mendapatkan semua users dari database
+GET http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+###
+
+### GET All Users - With Query Parameters
+# Test dengan query parameters untuk filtering/pagination
+GET http://localhost:3000/api/v1/users?limit=10&offset=0
+Content-Type: application/json
+
+###
+
+### GET All Users - Empty Response Test
+# Test untuk memastikan response kosong berfungsi dengan baik
+GET http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+###
+
+### GET All Users - Error Handling Test
+# Test untuk error handling (server error simulation)
+GET http://localhost:3000/api/v1/users
+Content-Type: application/json
+X-Test-Error: server-error
+
+###
+
+### GET All Users - Performance Test
+# Test untuk mengukur performance endpoint
+GET http://localhost:3000/api/v1/users
+Content-Type: application/json
+X-Performance-Test: true
+
+###
+
+### GET All Users - With Headers
+# Test dengan custom headers
+GET http://localhost:3000/api/v1/users
+Content-Type: application/json
+Accept: application/json
+User-Agent: HTTP-Client-Test/1.0
+X-Request-ID: test-get-all-users-001
+
+###

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rockman App - Debug Database Connection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .test-section {
+            margin-bottom: 30px;
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-container {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .status-success {
+            background: #28a745;
+        }
+
+        .status-error {
+            background: #dc3545;
+        }
+
+        .status-loading {
+            background: #ffc107;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .result-text {
+            flex: 1;
+        }
+
+        .result-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .result-detail {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .config-info {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .config-title {
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .config-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .config-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .config-label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .config-value {
+            color: #666;
+            font-family: 'Courier New', monospace;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Rockman App</h1>
+            <p>Debug Database Connection</p>
+        </div>
+
+        <div class="config-info">
+            <div class="config-title">📋 Konfigurasi Database</div>
+            <div id="config-container">
+                <div class="config-item">
+                    <span class="config-label">Status:</span>
+                    <span class="config-value" id="config-status">Memuat...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <button class="test-button" id="testButton" onclick="runDatabaseTest()">
+                🔍 Test Koneksi Database
+            </button>
+            
+            <div id="results" class="result-container" style="display: none;">
+                <div id="test-results"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Rockman App Database Debug Tool v1.0</p>
+            <p>Dibuat dengan ❤️ untuk monitoring database connection</p>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Fungsi untuk memuat konfigurasi database saat halaman dimuat
+         */
+        async function loadDatabaseConfig() {
+            try {
+                const response = await fetch('/api/debug/database-config');
+                const config = await response.json();
+                
+                const configContainer = document.getElementById('config-container');
+                configContainer.innerHTML = '';
+                
+                if (config.success) {
+                    document.getElementById('config-status').textContent = '✅ Konfigurasi Valid';
+                    
+                    Object.entries(config.data).forEach(([key, value]) => {
+                        const item = document.createElement('div');
+                        item.className = 'config-item';
+                        item.innerHTML = `
+                            <span class="config-label">${key}:</span>
+                            <span class="config-value">${value}</span>
+                        `;
+                        configContainer.appendChild(item);
+                    });
+                } else {
+                    document.getElementById('config-status').textContent = '❌ Konfigurasi Error';
+                    const errorItem = document.createElement('div');
+                    errorItem.className = 'config-item';
+                    errorItem.innerHTML = `
+                        <span class="config-label">Error:</span>
+                        <span class="config-value" style="color: #dc3545;">${config.error}</span>
+                    `;
+                    configContainer.appendChild(errorItem);
+                }
+            } catch (error) {
+                document.getElementById('config-status').textContent = '❌ Gagal Memuat';
+                console.error('Error loading config:', error);
+            }
+        }
+
+        /**
+         * Fungsi untuk menjalankan test koneksi database
+         */
+        async function runDatabaseTest() {
+            const button = document.getElementById('testButton');
+            const results = document.getElementById('results');
+            const testResults = document.getElementById('test-results');
+            
+            // Disable button dan show loading
+            button.disabled = true;
+            button.innerHTML = '<span class="loading"></span>Menjalankan Test...';
+            results.style.display = 'block';
+            testResults.innerHTML = '';
+            
+            // Test items yang akan dijalankan
+            const tests = [
+                { id: 'config', name: 'Konfigurasi Environment', endpoint: '/api/debug/test-config' },
+                { id: 'raw', name: 'Koneksi Raw PostgreSQL', endpoint: '/api/debug/test-raw-connection' },
+                { id: 'drizzle', name: 'Koneksi Drizzle ORM', endpoint: '/api/debug/test-drizzle-connection' },
+                { id: 'schema', name: 'Validasi Schema Database', endpoint: '/api/debug/test-schema' }
+            ];
+            
+            // Buat placeholder untuk setiap test
+            tests.forEach(test => {
+                const resultItem = createResultItem(test.id, test.name, 'loading', 'Menjalankan test...');
+                testResults.appendChild(resultItem);
+            });
+            
+            // Jalankan setiap test secara berurutan
+            for (const test of tests) {
+                try {
+                    const response = await fetch(test.endpoint);
+                    const result = await response.json();
+                    
+                    updateResultItem(
+                        test.id, 
+                        test.name, 
+                        result.success ? 'success' : 'error',
+                        result.message || result.error,
+                        result.details
+                    );
+                    
+                    // Delay kecil untuk UX yang lebih baik
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                } catch (error) {
+                    updateResultItem(
+                        test.id, 
+                        test.name, 
+                        'error',
+                        `Error: ${error.message}`,
+                        null
+                    );
+                }
+            }
+            
+            // Re-enable button
+            button.disabled = false;
+            button.innerHTML = '🔄 Test Ulang Koneksi Database';
+        }
+
+        /**
+         * Fungsi untuk membuat item result
+         */
+        function createResultItem(id, title, status, message) {
+            const item = document.createElement('div');
+            item.className = 'result-item';
+            item.id = `result-${id}`;
+            
+            const statusClass = status === 'success' ? 'status-success' : 
+                               status === 'error' ? 'status-error' : 'status-loading';
+            const statusIcon = status === 'success' ? '✓' : 
+                              status === 'error' ? '✗' : '⟳';
+            
+            item.innerHTML = `
+                <div class="status-icon ${statusClass}">${statusIcon}</div>
+                <div class="result-text">
+                    <div class="result-title">${title}</div>
+                    <div class="result-detail">${message}</div>
+                </div>
+            `;
+            
+            return item;
+        }
+
+        /**
+         * Fungsi untuk update item result
+         */
+        function updateResultItem(id, title, status, message, details) {
+            const item = document.getElementById(`result-${id}`);
+            if (!item) return;
+            
+            const statusClass = status === 'success' ? 'status-success' : 'status-error';
+            const statusIcon = status === 'success' ? '✓' : '✗';
+            
+            let detailsHtml = '';
+            if (details && typeof details === 'object') {
+                detailsHtml = Object.entries(details)
+                    .map(([key, value]) => `${key}: ${value}`)
+                    .join(' | ');
+            }
+            
+            item.innerHTML = `
+                <div class="status-icon ${statusClass}">${statusIcon}</div>
+                <div class="result-text">
+                    <div class="result-title">${title}</div>
+                    <div class="result-detail">${message}</div>
+                    ${detailsHtml ? `<div class="result-detail" style="margin-top: 5px; font-size: 0.8rem; color: #888;">${detailsHtml}</div>` : ''}
+                </div>
+            `;
+        }
+
+        // Load konfigurasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', loadDatabaseConfig);
+    </script>
+</body>
+</html>

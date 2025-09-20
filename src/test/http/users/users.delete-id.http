@@ -1,0 +1,240 @@
+### DELETE User by ID - Valid ID
+# Menghapus user berdasarkan ID yang valid
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+###
+
+### DELETE User by ID - With Confirmation
+# Menghapus user dengan konfirmasi
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "confirm": true,
+  "reason": "User requested account deletion"
+}
+
+###
+
+### DELETE User by ID - Soft Delete
+# Soft delete user (menandai sebagai deleted)
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "softDelete": true,
+  "deletedBy": "admin@example.com",
+  "deletedAt": "2024-01-15T10:30:00Z",
+  "reason": "Account deactivation"
+}
+
+###
+
+### DELETE User by ID - UUID Format
+# Test dengan UUID format ID
+DELETE http://localhost:3000/api/v1/users/550e8400-e29b-41d4-a716-446655440000
+Content-Type: application/json
+
+{
+  "confirm": true
+}
+
+###
+
+### DELETE User by ID - Non-existent ID
+# Test error handling untuk ID yang tidak ada (404)
+DELETE http://localhost:3000/api/v1/users/99999
+Content-Type: application/json
+
+###
+
+### DELETE User by ID - Invalid ID Format
+# Test error handling untuk format ID yang tidak valid
+DELETE http://localhost:3000/api/v1/users/invalid-id
+Content-Type: application/json
+
+###
+
+### DELETE User by ID - Negative ID
+# Test error handling untuk ID negatif
+DELETE http://localhost:3000/api/v1/users/-1
+Content-Type: application/json
+
+###
+
+### DELETE User by ID - Zero ID
+# Test error handling untuk ID zero
+DELETE http://localhost:3000/api/v1/users/0
+Content-Type: application/json
+
+###
+
+### DELETE User by ID - With Cascade
+# Menghapus user beserta data terkait
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "cascade": true,
+  "cascadeEntities": ["profile", "posts", "comments", "sessions"],
+  "confirm": true
+}
+
+###
+
+### DELETE User by ID - With Backup
+# Menghapus user dengan membuat backup terlebih dahulu
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "createBackup": true,
+  "backupLocation": "backup/user_1_2024_01_15.json",
+  "confirm": true
+}
+
+###
+
+### DELETE User by ID - Double Delete Test
+# Test untuk menghapus user yang sudah dihapus
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "confirm": true
+}
+
+###
+
+### DELETE User by ID - Missing Confirmation
+# Test error handling untuk konfirmasi yang hilang
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "reason": "Testing without confirmation"
+}
+
+###
+
+### DELETE User by ID - Unauthorized Delete
+# Test error handling untuk unauthorized access
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+###
+
+### DELETE User by ID - Admin Protection
+# Test untuk mencegah penghapusan admin user
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "confirm": true,
+  "bypassAdminProtection": false
+}
+
+###
+
+### DELETE User by ID - Concurrent Delete Test
+# Test concurrent delete operations
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+X-Test-Concurrent: true
+
+{
+  "confirm": true,
+  "requestId": "concurrent-delete-user-001"
+}
+
+###
+
+### DELETE User by ID - With Custom Headers
+# Test dengan custom headers dan authorization
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+Accept: application/json
+User-Agent: HTTP-Client-Test/1.0
+X-Request-ID: test-delete-user-by-id-001
+Authorization: Bearer admin-token
+
+{
+  "confirm": true,
+  "reason": "Administrative action",
+  "performedBy": "admin@example.com"
+}
+
+###
+
+### DELETE User by ID - Conditional Delete
+# Test conditional delete dengan version check
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+If-Match: "version-123"
+
+{
+  "confirm": true,
+  "expectedVersion": 123
+}
+
+###
+
+### DELETE User by ID - Scheduled Delete
+# Test scheduled delete (menghapus di waktu tertentu)
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "scheduledAt": "2024-01-20T00:00:00Z",
+  "reason": "Scheduled account cleanup",
+  "confirm": true
+}
+
+###
+
+### DELETE User by ID - Dry Run
+# Test dry run untuk melihat apa yang akan dihapus
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "dryRun": true,
+  "showRelatedData": true
+}
+
+###
+
+### DELETE User by ID - Force Delete
+# Force delete untuk menghapus secara permanen
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "forceDelete": true,
+  "confirm": true,
+  "reason": "Permanent deletion requested",
+  "acknowledgeDataLoss": true
+}
+
+###
+
+### DELETE User by ID - Bulk Related Cleanup
+# Menghapus user dan cleanup data terkait secara bulk
+DELETE http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+  "confirm": true,
+  "cleanupRelated": {
+    "posts": true,
+    "comments": true,
+    "likes": true,
+    "sessions": true,
+    "notifications": true,
+    "files": true
+  },
+  "reason": "Complete account removal"
+}
+
+###

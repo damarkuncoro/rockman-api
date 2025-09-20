@@ -1,0 +1,160 @@
+### DELETE All Users
+# Menghapus semua users dari database (HATI-HATI!)
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+###
+
+### DELETE All Users - With Confirmation
+# Menghapus semua users dengan konfirmasi
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "confirm": true,
+  "reason": "Database cleanup for testing"
+}
+
+###
+
+### DELETE All Users - With Conditions
+# Menghapus users berdasarkan kondisi tertentu
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "conditions": {
+    "status": "inactive",
+    "lastLogin": {
+      "lt": "2023-01-01T00:00:00Z"
+    }
+  }
+}
+
+###
+
+### DELETE All Users - Soft Delete
+# Soft delete (menandai sebagai deleted tanpa menghapus dari database)
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "softDelete": true,
+  "deletedBy": "admin",
+  "deletedAt": "2024-01-15T10:30:00Z"
+}
+
+###
+
+### DELETE All Users - With Backup
+# Menghapus dengan membuat backup terlebih dahulu
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "createBackup": true,
+  "backupLocation": "backup/users_2024_01_15.json"
+}
+
+###
+
+### DELETE All Users - Batch Delete
+# Menghapus dalam batch untuk performa yang lebih baik
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "batchSize": 100,
+  "confirm": true
+}
+
+###
+
+### DELETE All Users - With Cascade
+# Menghapus users beserta data terkait (cascade delete)
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "cascade": true,
+  "cascadeEntities": ["profiles", "preferences", "sessions"],
+  "confirm": true
+}
+
+###
+
+### DELETE All Users - Unauthorized Test
+# Test error handling untuk unauthorized access
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+###
+
+### DELETE All Users - Missing Confirmation
+# Test error handling untuk konfirmasi yang hilang
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "reason": "Testing without confirmation"
+}
+
+###
+
+### DELETE All Users - Invalid Conditions
+# Test error handling untuk kondisi yang tidak valid
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "conditions": {
+    "invalidField": "invalidValue",
+    "age": "not-a-number"
+  }
+}
+
+###
+
+### DELETE All Users - Concurrent Delete Test
+# Test untuk concurrent delete operations
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+X-Test-Concurrent: true
+
+{
+  "confirm": true,
+  "requestId": "concurrent-delete-test-001"
+}
+
+###
+
+### DELETE All Users - With Custom Headers
+# Test dengan custom headers dan authorization
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+Accept: application/json
+User-Agent: HTTP-Client-Test/1.0
+X-Request-ID: test-delete-all-users-001
+Authorization: Bearer admin-token
+
+{
+  "confirm": true,
+  "reason": "Administrative cleanup",
+  "performedBy": "admin@example.com"
+}
+
+###
+
+### DELETE All Users - Dry Run
+# Test dry run untuk melihat apa yang akan dihapus tanpa benar-benar menghapus
+DELETE http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "dryRun": true,
+  "conditions": {
+    "status": "inactive"
+  }
+}
+
+###

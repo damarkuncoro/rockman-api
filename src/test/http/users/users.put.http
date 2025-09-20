@@ -1,0 +1,166 @@
+### PUT Update All Users
+# Update semua users dengan data baru (bulk update)
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "updates": {
+    "role": "updated_user",
+    "lastModified": "2024-01-15T10:30:00Z"
+  }
+}
+
+###
+
+### PUT Update All Users - Partial Update
+# Update field tertentu saja untuk semua users
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "updates": {
+    "status": "active"
+  }
+}
+
+###
+
+### PUT Update All Users - Multiple Fields
+# Update beberapa field sekaligus
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "updates": {
+    "role": "member",
+    "status": "verified",
+    "lastLogin": "2024-01-15T10:30:00Z",
+    "preferences": {
+      "emailNotifications": true,
+      "theme": "light"
+    }
+  }
+}
+
+###
+
+### PUT Update All Users - With Conditions
+# Update dengan kondisi tertentu
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "updates": {
+    "role": "premium"
+  },
+  "conditions": {
+    "status": "active",
+    "age": {
+      "gte": 18
+    }
+  }
+}
+
+###
+
+### PUT Update All Users - Invalid Data
+# Test error handling untuk data tidak valid
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "updates": {
+    "email": "invalid-email-format",
+    "age": "not-a-number"
+  }
+}
+
+###
+
+### PUT Update All Users - Empty Updates
+# Test error handling untuk updates kosong
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "updates": {}
+}
+
+###
+
+### PUT Update All Users - Missing Body
+# Test error handling untuk body yang hilang
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+###
+
+### PUT Update All Users - Large Payload
+# Test dengan payload besar
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "updates": {
+    "role": "enterprise",
+    "metadata": {
+      "department": "Engineering",
+      "team": "Backend Development",
+      "skills": ["JavaScript", "TypeScript", "Node.js", "React", "Next.js"],
+      "certifications": [
+        {
+          "name": "AWS Certified Developer",
+          "issuer": "Amazon Web Services",
+          "date": "2023-12-01"
+        },
+        {
+          "name": "Google Cloud Professional",
+          "issuer": "Google Cloud",
+          "date": "2023-11-15"
+        }
+      ],
+      "projects": [
+        {
+          "name": "E-commerce Platform",
+          "role": "Lead Developer",
+          "duration": "6 months"
+        }
+      ]
+    }
+  }
+}
+
+###
+
+### PUT Update All Users - Concurrent Update Test
+# Test untuk concurrent updates
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+X-Test-Concurrent: true
+
+{
+  "updates": {
+    "lastUpdated": "2024-01-15T10:30:00Z",
+    "version": 2
+  }
+}
+
+###
+
+### PUT Update All Users - With Custom Headers
+# Test dengan custom headers
+PUT http://localhost:3000/api/v1/users
+Content-Type: application/json
+Accept: application/json
+User-Agent: HTTP-Client-Test/1.0
+X-Request-ID: test-put-all-users-001
+Authorization: Bearer test-token
+
+{
+  "updates": {
+    "role": "authenticated_user",
+    "lastActivity": "2024-01-15T10:30:00Z"
+  }
+}
+
+###
