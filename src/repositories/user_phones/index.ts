@@ -11,9 +11,4 @@
  */
 
 // Repository class dan instances
-export {
-  UserPhonesRepository,
-  createUserPhonesRepository,
-  userPhonesRepository,
-  UserPhoneRepository
-} from './user_phones.repository';
+export { UserPhonesRepository } from './user_phones.repository';
