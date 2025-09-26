@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { featuresService } from "@/services/database/features/features.service"
+import { createCorsResponse } from "@/utils/cors"
 
 /**
  * GET /api/v1/features - Mengambil semua features
@@ -8,10 +9,10 @@ import { featuresService } from "@/services/database/features/features.service"
 export async function GET() {
   try {
     const features = await featuresService.GET.All()
-    return NextResponse.json(features)
+    return createCorsResponse(features)
   } catch (error) {
     console.error('Error fetching features:', error)
-    return NextResponse.json(
+    return createCorsResponse(
       { error: 'Failed to fetch features' },
       { status: 500 }
     )

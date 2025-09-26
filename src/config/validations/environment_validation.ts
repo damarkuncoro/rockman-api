@@ -1,4 +1,4 @@
-// rockman-app/src/config/environment.ts
+// rockman-api/src/config/environment.ts
 import { z } from 'zod'
 
 

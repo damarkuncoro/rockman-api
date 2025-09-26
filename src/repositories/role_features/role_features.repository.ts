@@ -1,4 +1,4 @@
-// rockman-app/src/repositories/role_features/role_features.repository.ts
+// rockman-api/src/repositories/role_features/role_features.repository.ts
 import { Repository } from "@/core/core.repository"
 import { roleFeatures } from "@/db/schema/role_features"
 

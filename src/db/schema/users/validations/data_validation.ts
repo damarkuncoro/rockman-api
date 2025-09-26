@@ -46,6 +46,30 @@ export const usernameSchema = z
   .regex(/^[a-zA-Z0-9_]+$/, "Username hanya boleh mengandung huruf, angka, dan underscore");
 
 /**
+ * Schema validasi untuk ABAC Customer
+ */
+export const customerTypeSchema = z
+  .enum(["personal", "business", "enterprise"])
+  .optional();
+
+export const customerTierSchema = z
+  .enum(["basic", "premium", "vip"])
+  .optional();
+
+export const customerSinceSchema = z
+  .date()
+  .optional();
+
+export const customerStatusSchema = z
+  .enum(["active", "inactive", "suspended"])
+  .optional();
+
+export const customerSegmentSchema = z
+  .string()
+  .max(100, "Segmentasi customer maksimal 100 karakter")
+  .optional();
+
+/**
  * Authentication schemas
  */
 export const loginSchema = z.object({

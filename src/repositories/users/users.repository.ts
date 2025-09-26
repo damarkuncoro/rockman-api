@@ -1,4 +1,4 @@
-// rockman-app/src/repositories/users/users.repository.ts
+// rockman-api/src/repositories/users/users.repository.ts
 import { Repository } from "../../core/core.repository"
 import { users } from "../../db/schema/users"
 
@@ -29,13 +29,13 @@ export class UsersRepository extends Repository<typeof users> {
   }
 
   /**
-   * Method khusus untuk users - mencari berdasarkan department (ABAC)
-   * @param department - Department yang dicari
+   * Method khusus untuk users - mencari berdasarkan department ID (ABAC)
+   * @param departmentId - ID department yang dicari
    * @returns Promise array users dalam department tersebut
    */
-  async findByDepartment(department: string) {
+  async findByDepartmentId(departmentId: number) {
     const allUsers = await this.SELECT.All()
-    return allUsers.filter(user => user.department === department)
+    return allUsers.filter(user => user.departmentId === departmentId)
   }
 
   /**
@@ -56,6 +56,46 @@ export class UsersRepository extends Repository<typeof users> {
   async findByMinLevel(minLevel: number) {
     const allUsers = await this.SELECT.All()
     return allUsers.filter(user => user.level !== null && user.level >= minLevel)
+  }
+  
+  /**
+   * Method khusus untuk users - mencari berdasarkan customer type (ABAC)
+   * @param customerType - Tipe customer yang dicari
+   * @returns Promise array users dengan tipe customer tertentu
+   */
+  async findByCustomerType(customerType: string) {
+    const allUsers = await this.SELECT.All()
+    return allUsers.filter(user => user.customerType === customerType)
+  }
+  
+  /**
+   * Method khusus untuk users - mencari berdasarkan customer tier (ABAC)
+   * @param customerTier - Tier customer yang dicari
+   * @returns Promise array users dengan tier customer tertentu
+   */
+  async findByCustomerTier(customerTier: string) {
+    const allUsers = await this.SELECT.All()
+    return allUsers.filter(user => user.customerTier === customerTier)
+  }
+  
+  /**
+   * Method khusus untuk users - mencari berdasarkan customer status (ABAC)
+   * @param customerStatus - Status customer yang dicari
+   * @returns Promise array users dengan status customer tertentu
+   */
+  async findByCustomerStatus(customerStatus: string) {
+    const allUsers = await this.SELECT.All()
+    return allUsers.filter(user => user.customerStatus === customerStatus)
+  }
+  
+  /**
+   * Method khusus untuk users - mencari berdasarkan customer segment (ABAC)
+   * @param customerSegment - Segment customer yang dicari
+   * @returns Promise array users dengan segment customer tertentu
+   */
+  async findByCustomerSegment(customerSegment: string) {
+    const allUsers = await this.SELECT.All()
+    return allUsers.filter(user => user.customerSegment === customerSegment)
   }
 }
 

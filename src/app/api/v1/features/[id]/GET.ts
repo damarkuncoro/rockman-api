@@ -9,15 +9,24 @@ import { featuresService } from "@/services/database/features/features.service"
  */
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  // Ambil CORS origin dari environment variable dengan fallback
+  const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000'
+  
   try {
-    const id = parseInt(params.id)
+    const id = parseInt((await params).id)
     
     if (isNaN(id)) {
       return NextResponse.json(
         { error: 'Invalid ID format' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: {
+            'Access-Control-Allow-Origin': corsOrigin,
+            'Access-Control-Allow-Credentials': 'true',
+          }
+        }
       )
     }
 
@@ -26,16 +35,33 @@ export async function GET(
     if (!feature) {
       return NextResponse.json(
         { error: 'Feature not found' },
-        { status: 404 }
+        { 
+          status: 404,
+          headers: {
+            'Access-Control-Allow-Origin': corsOrigin,
+            'Access-Control-Allow-Credentials': 'true',
+          }
+        }
       )
     }
 
-    return NextResponse.json(feature)
+    return NextResponse.json(feature, {
+      headers: {
+        'Access-Control-Allow-Origin': corsOrigin,
+        'Access-Control-Allow-Credentials': 'true',
+      }
+    })
   } catch (error) {
     console.error('Error fetching feature:', error)
     return NextResponse.json(
       { error: 'Failed to fetch feature' },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': corsOrigin,
+          'Access-Control-Allow-Credentials': 'true',
+        }
+      }
     )
   }
 }

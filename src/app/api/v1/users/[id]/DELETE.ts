@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { usersService } from "@/services/database/users/users.service"
+import { SERVICE } from "@/core/core.service.registry"
 
 /**
  * DELETE /api/v1/users/[id] - Menghapus user berdasarkan ID
@@ -30,8 +30,8 @@ export async function DELETE(
       )
     }
 
-    // Hapus user melalui service
-    const deletedUser = await usersService.DELETE.Remove(userId)
+    // Hapus user melalui SERVICE.users.DELETE
+    const deletedUser = await (SERVICE as any).users.DELETE.ID(userId)
     
     if (!deletedUser) {
       return NextResponse.json(

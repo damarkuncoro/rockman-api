@@ -1,4 +1,4 @@
-// rockman-app/src/services/roles/roles.service.ts
+// rockman-api/src/services/roles/roles.service.ts
 import { Service } from '../../../core/core.service'
 import { RolesRepository, createRolesRepository } from '../../../repositories/roles/roles.repository'
 import { roles } from '../../../db/schema/roles'
@@ -137,3 +137,14 @@ export function createRolesService(config?: IServiceConfig): RolesService {
  * Menggunakan konfigurasi default
  */
 export const rolesService = createRolesService()
+
+/**
+ * Registrasi RolesService ke SERVICE registry
+ * Memungkinkan akses dengan pattern SERVICE.role.* atau SERVICE.roles.*
+ */
+import { SERVICE } from '../../../core/core.service.registry'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+;(SERVICE as any).register('role', rolesService)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+;(SERVICE as any).register('roles', rolesService)

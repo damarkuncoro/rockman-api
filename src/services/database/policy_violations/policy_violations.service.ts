@@ -1,4 +1,4 @@
-// rockman-app/src/services/policy_violations/policy_violations.service.ts
+// rockman-api/src/services/policy_violations/policy_violations.service.ts
 import { Service } from '../../../core/core.service'
 import { PolicyViolationsRepository, createPolicyViolationsRepository } from '../../../repositories/policy_violations/policy_violations.repository'
 import { policyViolations } from '../../../db/schema/policy_violations'

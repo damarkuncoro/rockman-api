@@ -9,10 +9,10 @@ import { featuresService } from "@/services/database/features/features.service"
  */
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id)
+    const id = parseInt((await params).id)
     
     if (isNaN(id)) {
       return NextResponse.json(

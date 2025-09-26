@@ -1,0 +1,20 @@
+import { NextResponse } from 'next/server'
+
+/**
+ * OPTIONS /api/v1/roles - Handler untuk preflight CORS request
+ * @returns Promise<NextResponse> - Response dengan CORS headers
+ */
+export async function OPTIONS() {
+  // Mengambil CORS origin dari environment variable
+  const corsOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000'
+  
+  // Membuat response dengan CORS headers untuk preflight request
+  const response = new NextResponse(null, { status: 204 })
+  response.headers.set('Access-Control-Allow-Origin', corsOrigin)
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  response.headers.set('Access-Control-Allow-Credentials', 'true')
+  response.headers.set('Access-Control-Max-Age', '86400')
+  
+  return response
+}

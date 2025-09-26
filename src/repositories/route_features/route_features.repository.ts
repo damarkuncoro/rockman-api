@@ -1,4 +1,4 @@
-// rockman-app/src/repositories/route_features/route_features.repository.ts
+// rockman-api/src/repositories/route_features/route_features.repository.ts
 import { Repository } from "@/core/core.repository"
 import { routeFeatures } from "@/db/schema/route_features"
 

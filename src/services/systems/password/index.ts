@@ -24,7 +24,8 @@ SYSTEM.register("password", {
    * @param saltRounds - Jumlah salt rounds untuk bcrypt (default: 10)
    * @returns Promise<string> - Hashed password
    */
-  GENERATE: async (plain: string, saltRounds: number = 10): Promise<string> => {
+  GENERATE: async (...args: unknown[]): Promise<string> => {
+    const [plain, saltRounds = 10] = args as [string, number?]
     if (!plain || typeof plain !== 'string') {
       throw new Error('Password harus berupa string yang tidak kosong')
     }
@@ -34,21 +35,19 @@ SYSTEM.register("password", {
   /**
    * Verify plain text password dengan hash
    * @param plain - Plain text password
-   * @param hashed - Hashed password dari database
+   * @param hashed - Hashed password untuk dibandingkan
    * @returns Promise<boolean> - True jika password cocok
    */
-  VERIFY: async (plain: string, hashed: string): Promise<boolean> => {
-    if (!plain || !hashed) {
-      return false
+  VERIFY: async (...args: unknown[]): Promise<boolean> => {
+    const [plain, hashed] = args as [string, string]
+    if (!plain || typeof plain !== 'string') {
+      throw new Error('Password harus berupa string yang tidak kosong')
+    }
+    if (!hashed || typeof hashed !== 'string') {
+      throw new Error('Hash password harus berupa string yang tidak kosong')
     }
     return await bcrypt.compare(plain, hashed)
   }
 })
 
-// Export SYSTEM untuk chaining dengan modul lain
-export default SYSTEM as {
-  password: {
-    GENERATE: (plain: string, saltRounds?: number) => Promise<string>
-    VERIFY: (plain: string, hashed: string) => Promise<boolean>
-  }
-}
+export default SYSTEM

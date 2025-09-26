@@ -1,4 +1,4 @@
-// rockman-app/src/repositories/policies/policies.repository.ts
+// rockman-api/src/repositories/policies/policies.repository.ts
 import { Repository } from "@/core/core.repository"
 import { policies } from "@/db/schema/policies"
 

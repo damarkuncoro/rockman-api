@@ -1,4 +1,4 @@
-// rockman-app/src/services/role_features/role_features.service.ts
+// rockman-api/src/services/role_features/role_features.service.ts
 import { Service } from '../../../core/core.service'
 import { RoleFeaturesRepository, createRoleFeaturesRepository } from '../../../repositories/role_features/role_features.repository'
 import { roleFeatures } from '../../../db/schema/role_features'

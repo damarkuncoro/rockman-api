@@ -1,4 +1,4 @@
-// rockman-app/src/repositories/roles/roles.repository.ts
+// rockman-api/src/repositories/roles/roles.repository.ts
 import { Repository } from "@/core/core.repository"
 import { roles } from "@/db/schema/roles"
 

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { policiesService } from "@/services/database/policies/policies.service"
+import { createCorsResponse } from "@/utils/cors"
 
 /**
  * GET /api/v1/policies - Mengambil semua policies
@@ -8,10 +9,10 @@ import { policiesService } from "@/services/database/policies/policies.service"
 export async function GET() {
   try {
     const policies = await policiesService.GET.All()
-    return NextResponse.json(policies)
+    return createCorsResponse(policies)
   } catch (error) {
     console.error('Error fetching policies:', error)
-    return NextResponse.json(
+    return createCorsResponse(
       { error: 'Failed to fetch policies' },
       { status: 500 }
     )

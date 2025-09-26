@@ -1,4 +1,4 @@
-// rockman-app/src/services/access_logs/access_logs.service.ts
+// rockman-api/src/services/access_logs/access_logs.service.ts
 import { Service } from '../../../core/core.service'
 import { AccessLogsRepository, createAccessLogsRepository } from '../../../repositories/access_logs/access_logs.repository'
 import { accessLogs } from '../../../db/schema/access_logs'

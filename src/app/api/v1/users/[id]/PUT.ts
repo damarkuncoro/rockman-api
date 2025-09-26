@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { usersService } from "@/services/database/users/users.service"
+import { SERVICE } from "@/core/core.service.registry"
 import { processPasswordInData, hasValidPassword, sanitizePasswordFromData } from "@/utils/password.utils"
 
 /**
@@ -43,8 +43,8 @@ export async function PUT(
     // Hapus password plain text dari data yang akan disimpan
     const sanitizedData = sanitizePasswordFromData(processedData)
     
-    // Update user melalui service
-    const updatedUser = await usersService.PUT.Update(userId, sanitizedData)
+    // Update user melalui SERVICE.users.PUT
+    const updatedUser = await (SERVICE as any).users.PUT.ID(userId, sanitizedData)
     
     if (!updatedUser) {
       return NextResponse.json(

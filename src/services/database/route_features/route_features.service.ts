@@ -1,4 +1,4 @@
-// rockman-app/src/services/route_features/route_features.service.ts
+// rockman-api/src/services/route_features/route_features.service.ts
 import { Service } from '../../../core/core.service'
 import { RouteFeaturesRepository, createRouteFeaturesRepository } from '../../../repositories/route_features/route_features.repository'
 import { routeFeatures } from '../../../db/schema/route_features'

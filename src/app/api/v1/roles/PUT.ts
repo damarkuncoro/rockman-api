@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { rolesService } from "@/services/database/roles/roles.service"
+import { addCorsHeaders } from "@/utils/cors"
 
 /**
  * PUT /api/v1/roles - Update role
@@ -11,19 +12,22 @@ export async function PUT(req: NextRequest) {
     const data = await req.json()
     
     if (!data.id) {
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { error: 'ID is required for update' },
         { status: 400 }
       )
+      return addCorsHeaders(errorResponse)
     }
 
     const role = await rolesService.PUT.Update(data.id, data)
-    return NextResponse.json(role)
+    const response = NextResponse.json(role)
+    return addCorsHeaders(response)
   } catch (error) {
     console.error('Error updating role:', error)
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { error: 'Failed to update role' },
       { status: 500 }
     )
+    return addCorsHeaders(errorResponse)
   }
 }

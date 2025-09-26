@@ -9,10 +9,10 @@ import { policiesService } from "@/services/database/policies/policies.service"
  */
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id)
+    const id = parseInt((await params).id)
     
     if (isNaN(id)) {
       return NextResponse.json(

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { rolesService } from "@/services/database/roles/roles.service"
+import { addCorsHeaders } from "@/utils/cors"
 
 /**
  * DELETE /api/v1/roles - Menghapus role
@@ -12,19 +13,22 @@ export async function DELETE(req: NextRequest) {
     const id = searchParams.get('id')
     
     if (!id) {
-      return NextResponse.json(
+      const errorResponse = NextResponse.json(
         { error: 'ID is required' },
         { status: 400 }
       )
+      return addCorsHeaders(errorResponse)
     }
 
     await rolesService.DELETE.Remove(parseInt(id))
-    return NextResponse.json({ message: 'Role deleted successfully' })
+    const response = NextResponse.json({ message: 'Role deleted successfully' })
+    return addCorsHeaders(response)
   } catch (error) {
     console.error('Error deleting role:', error)
-    return NextResponse.json(
+    const errorResponse = NextResponse.json(
       { error: 'Failed to delete role' },
       { status: 500 }
     )
+    return addCorsHeaders(errorResponse)
   }
 }

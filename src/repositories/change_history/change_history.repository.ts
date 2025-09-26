@@ -1,4 +1,4 @@
-// rockman-app/src/repositories/change_history/change_history.repository.ts
+// rockman-api/src/repositories/change_history/change_history.repository.ts
 import { Repository } from "@/core/core.repository"
 import { changeHistory } from "@/db/schema/change_history"
 

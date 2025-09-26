@@ -1,10 +1,11 @@
 /**
  * Main route file untuk /api/v1/route_features
- * Mengimpor dan mengekspor semua HTTP methods dari file terpisah
+ * Mengimpor dan mengekspor semua HTTP methods dari route-features
  */
 
-// Import semua method dari file terpisah
-export { GET } from './GET'
-export { POST } from './POST'
-export { PUT } from './PUT'
-export { DELETE } from './DELETE'
+// Re-export semua method dari route-features
+export { GET } from '../route-features/GET'
+export { POST } from '../route-features/POST'
+export { PUT } from '../route-features/PUT'
+export { DELETE } from '../route-features/DELETE'
+export { OPTIONS } from '../route-features/OPTIONS'

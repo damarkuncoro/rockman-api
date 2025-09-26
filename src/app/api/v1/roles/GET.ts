@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { rolesService } from "@/services/database/roles/roles.service"
+import { addCorsHeaders } from "@/utils/cors"
 
 /**
  * GET /api/v1/roles - Mengambil semua roles
@@ -8,12 +9,18 @@ import { rolesService } from "@/services/database/roles/roles.service"
 export async function GET() {
   try {
     const roles = await rolesService.GET.All()
-    return NextResponse.json(roles)
+    
+    // Membuat response dengan CORS headers menggunakan utilitas
+    const response = NextResponse.json(roles)
+    return addCorsHeaders(response)
   } catch (error) {
     console.error('Error fetching roles:', error)
-    return NextResponse.json(
+    
+    // Membuat error response dengan CORS headers menggunakan utilitas
+    const errorResponse = NextResponse.json(
       { error: 'Failed to fetch roles' },
       { status: 500 }
     )
+    return addCorsHeaders(errorResponse)
   }
 }

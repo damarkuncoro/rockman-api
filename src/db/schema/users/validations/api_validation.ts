@@ -19,6 +19,12 @@ export const createUserSchema = z.object({
   department: z.string().max(100, "Department maksimal 100 karakter").optional(),
   region: z.string().max(100, "Region maksimal 100 karakter").optional(),
   level: z.number().int().min(1, "Level minimal 1").max(10, "Level maksimal 10").optional(),
+  // ABAC attributes untuk Customer (optional)
+  customerType: z.enum(["personal", "business", "enterprise"]).optional(),
+  customerTier: z.enum(["basic", "premium", "vip"]).optional(),
+  customerSince: z.string().datetime().optional(),
+  customerStatus: z.enum(["active", "inactive", "suspended"]).optional(),
+  customerSegment: z.string().max(100, "Segmentasi customer maksimal 100 karakter").optional(),
 });
 
 /**
@@ -36,6 +42,12 @@ export const updateUserAbacSchema = z.object({
   department: z.string().max(100, "Department maksimal 100 karakter").optional(),
   region: z.string().max(100, "Region maksimal 100 karakter").optional(),
   level: z.number().int().min(1, "Level minimal 1").max(10, "Level maksimal 10").optional(),
+  // ABAC attributes untuk Customer (optional)
+  customerType: z.enum(["personal", "business", "enterprise"]).optional(),
+  customerTier: z.enum(["basic", "premium", "vip"]).optional(),
+  customerSince: z.string().datetime().optional(),
+  customerStatus: z.enum(["active", "inactive", "suspended"]).optional(),
+  customerSegment: z.string().max(100, "Segmentasi customer maksimal 100 karakter").optional(),
 });
 
 /**

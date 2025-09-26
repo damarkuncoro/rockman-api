@@ -1,4 +1,4 @@
-// rockman-app/src/services/sessions/sessions.service.ts
+// rockman-api/src/services/sessions/sessions.service.ts
 import { Service } from '../../../core/core.service'
 import { SessionsRepository, createSessionsRepository } from '../../../repositories/sessions/sessions.repository'
 import { sessions } from '../../../db/schema/sessions'
