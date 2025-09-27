@@ -19,7 +19,24 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@/app/*": [
+        "./src/app/*"
+      ],
+      "@/config/*": [
+        "./src/config/*"
+      ],
+      "@/core/*": [
+        "./src/core/*"
+      ],
+      "@/data/*": [
+        "./src/data/*"
+      ],
+      "@/db/*": [
+        "./src/db/*"
+      ]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../rockman-tests/debug-query.ts"],
