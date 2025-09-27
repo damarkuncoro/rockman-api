@@ -5,10 +5,15 @@
  * Responsibility: Validasi business logic untuk user addresses
  */
 
+interface Address {
+  isDefault: boolean;
+  [key: string]: unknown;
+}
+
 /**
  * Validasi apakah user dapat memiliki alamat default
  */
-export function validateDefaultAddress(addresses: any[]): boolean {
+export function validateDefaultAddress(addresses: Address[]): boolean {
   const defaultAddresses = addresses.filter(addr => addr.isDefault);
   return defaultAddresses.length <= 1;
 }

@@ -10,14 +10,19 @@ export interface IServiceRegistry {
 
 export interface IRepository<TTable extends PgTable> {
   SELECT: {
-    All: () => Promise<any[]>;
-    ById: (id: number) => Promise<any | null>;
+    All: () => Promise<TTable["$inferSelect"][]>;
+    ById: (id: number) => Promise<TTable["$inferSelect"] | null>;
   };
   INSERT: {
-    One: (data: any) => Promise<any>;
+    One: (
+      data: TTable["$inferInsert"]
+    ) => Promise<TTable["$inferSelect"]>;
   };
   UPDATE: {
-    One: (id: number, data: any) => Promise<any | null>;
+    One: (
+      id: number,
+      data: Partial<TTable["$inferInsert"]>
+    ) => Promise<TTable["$inferSelect"] | null>;
   };
   DELETE: {
     One: (id: number) => Promise<boolean>;
@@ -26,14 +31,19 @@ export interface IRepository<TTable extends PgTable> {
 
 export interface IService<TTable extends PgTable> {
   GET: {
-    All: () => Promise<any[]>;
-    ById: (id: number) => Promise<any | null>;
+    All: () => Promise<TTable["$inferSelect"][]>;
+    ById: (id: number) => Promise<TTable["$inferSelect"] | null>;
   };
   POST: {
-    Create: (data: any) => Promise<any>;
+    Create: (
+      data: TTable["$inferInsert"]
+    ) => Promise<TTable["$inferSelect"]>;
   };
   PUT: {
-    Update: (id: number, data: any) => Promise<any | null>;
+    Update: (
+      id: number,
+      data: Partial<TTable["$inferInsert"]>
+    ) => Promise<TTable["$inferSelect"] | null>;
   };
   DELETE: {
     Remove: (id: number) => Promise<boolean>;

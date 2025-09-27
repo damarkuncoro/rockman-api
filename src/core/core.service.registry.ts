@@ -19,6 +19,7 @@ class ServiceRegistry {
       );
     }
     this.services.set(name, service);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (this as any)[name] = service;
     if (
       typeof process !== 'undefined' &&
@@ -36,7 +37,7 @@ class ServiceRegistry {
     const existed = this.services.has(name);
     if (existed) {
       this.services.delete(name);
-      delete (this as any)[name];
+      delete (this as Record<string, unknown>)[name];
       if (
         typeof process !== 'undefined' &&
         process.env?.NODE_ENV === 'development'
@@ -59,7 +60,7 @@ class ServiceRegistry {
     const serviceNames = this.list();
     this.services.clear();
     serviceNames.forEach((name) => {
-      delete (this as any)[name];
+      delete (this as Record<string, unknown>)[name];
     });
     if (
       typeof process !== 'undefined' &&

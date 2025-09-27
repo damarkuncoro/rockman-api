@@ -32,7 +32,7 @@ export async function DELETE(
       data: deletedDepartment
     })
     
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error deleting department:', error)
     
     // Handle specific business logic errors

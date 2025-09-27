@@ -11,14 +11,22 @@
  * - SOLID: Separation of concerns untuk validation logic
  */
 
+interface Phone {
+  id?: number;
+  isDefault?: boolean;
+  phoneNumber?: string;
+  label?: string;
+  [key: string]: unknown;
+}
+
 /**
  * Validasi apakah user dapat memiliki nomor telepon default
  * Memastikan hanya ada satu nomor telepon default per user
- * 
+ *
  * @param phones - Array nomor telepon user
  * @returns boolean - true jika valid (maksimal 1 default)
  */
-export function validateDefaultPhone(phones: any[]): boolean {
+export function validateDefaultPhone(phones: Phone[]): boolean {
   const defaultPhones = phones.filter(phone => phone.isDefault);
   return defaultPhones.length <= 1;
 }
@@ -69,8 +77,8 @@ export function validateInternationalPhoneNumber(phoneNumber: string, countryCod
  * @param excludeId - ID nomor telepon yang dikecualikan (untuk update)
  * @returns boolean - true jika tidak ada duplikasi
  */
-export function validatePhoneDuplication(phones: any[], newPhone: string, excludeId?: number): boolean {
-  const duplicates = phones.filter(phone => 
+export function validatePhoneDuplication(phones: Phone[], newPhone: string, excludeId?: number): boolean {
+  const duplicates = phones.filter(phone =>
     phone.phoneNumber === newPhone && phone.id !== excludeId
   );
   return duplicates.length === 0;
@@ -85,9 +93,9 @@ export function validatePhoneDuplication(phones: any[], newPhone: string, exclud
  * @param excludeId - ID nomor telepon yang dikecualikan (untuk update)
  * @returns boolean - true jika label tidak duplikat
  */
-export function validatePhoneLabel(phones: any[], newLabel: string, excludeId?: number): boolean {
-  const duplicates = phones.filter(phone => 
-    phone.label.toLowerCase() === newLabel.toLowerCase() && phone.id !== excludeId
+export function validatePhoneLabel(phones: Phone[], newLabel: string, excludeId?: number): boolean {
+  const duplicates = phones.filter(phone =>
+    phone.label && phone.label.toLowerCase() === newLabel.toLowerCase() && phone.id !== excludeId
   );
   return duplicates.length === 0;
 }
